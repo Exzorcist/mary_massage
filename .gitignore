@@ -1,4 +1,9 @@
 /*
+# Sources
+!/app
+/app/*
+!/app/fonts
+!/app/images
 
 # Configuration files
 !/.gitignore
