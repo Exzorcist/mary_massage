@@ -22,6 +22,7 @@ let path = {
         images: {
             cwd: './app/images/',
             src: '**/*.{png,jpg,gif,svg}',
+            favicon: '*.ico',
         },  
     },
     result: {
@@ -63,7 +64,13 @@ module.exports = function(grunt) {
                 cwd: path.files.fonts.cwd,
                 src: path.files.fonts.src,
                 dest: path.result.fonts,
-                expand: true
+                expand: true,
+            },
+            favicon: {
+                cwd: path.files.images.cwd,
+                src: path.files.images.favicon,
+                dest: path.result.images,
+                expand: true,
             }
         },
 
@@ -173,7 +180,7 @@ module.exports = function(grunt) {
             },
             image: {
                 files: path.watch.image,
-                tasks: ['js'],
+                tasks: ['image'],
             },
         },
 
@@ -204,5 +211,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('js', ['jshint', 'concat:js', 'uglify']);
     grunt.registerTask('css', ['stylelint', 'less']);
-    grunt.registerTask('run', ['connect', 'watch']);
+    grunt.registerTask('create:files', ['copy:favicon', 'copy:fonts', 'html_imports', 'css', 'js', 'image']);
+    
+    grunt.registerTask('run', ['connect', 'create:files', 'watch']);
 };
